@@ -1,6 +1,6 @@
-import { Server } from 'tiantong'
 import { TestController } from './modules/test/user.controller.ts'
 import { UserController } from './modules/user/user.controller.ts'
+import { Server } from './src'
 
 const user = new UserController()
 const test = new TestController()

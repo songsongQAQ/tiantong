@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from 'tiantong'
+import { Body, Controller, Get, Post, Query } from '../../src'
 
 @Controller('user')
 export class UserController {

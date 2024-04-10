@@ -1,14 +1,14 @@
 import 'reflect-metadata'
 export const getMetadata = (
   value: any,
-  key: string | Symbol,
+  key: string | symbol,
   propertyKey?: any
 ) => {
   return Reflect.getMetadata(key, value, propertyKey)
 }
 export const setMetadata = (
   value: any,
-  key: string | Symbol,
+  key: string | symbol,
   data: any,
   propertyKey?: any
 ) => {

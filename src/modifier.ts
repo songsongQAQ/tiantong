@@ -14,14 +14,10 @@ export type IRoutes = Record<
 export function Controller(prefix: string) {
   return function (target: any): any {
     return class extends target {
-      routes: IRoutes
-      prefix: string
       constructor() {
         super()
-        this.prefix = prefix
         const mateRoutes = getMetadata(this.constructor, ROUTE_METADATA_KEY)
-        // Reflect.getMetadata(ROUTE_METADATA_KEY, this.constructor) || {}
-        this.routes = {}
+        const routes = {}
         Object.keys(mateRoutes).forEach((key) => {
           //类似 /user//替换为 /user
           key = key.replace(/\/+$/, '')
@@ -29,7 +25,7 @@ export function Controller(prefix: string) {
             mateRoutes[key]
         })
 
-        setMetadata(this.constructor, ROUTE_METADATA_KEY, this.routes)
+        setMetadata(this.constructor, ROUTE_METADATA_KEY, routes)
       }
     }
   }
@@ -82,7 +78,7 @@ export function Post(path: string) {
 
 export function Query(queryName?: string) {
   return function (
-    target: Object,
+    target: any,
     propertyKey: string | symbol,
     parameterIndex: number
   ) {
@@ -96,7 +92,7 @@ export function Query(queryName?: string) {
 }
 export function Body(queryName?: string) {
   return function (
-    target: Object,
+    target: any,
     propertyKey: string | symbol,
     parameterIndex: number
   ) {

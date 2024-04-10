@@ -1,3 +1,17 @@
-import js from '@eslint/js'
+// @ts-check
+import eslint from '@eslint/js'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
-export default [js.configs.recommended, eslintPluginPrettierRecommended]
+import tseslint from 'typescript-eslint'
+
+export default [
+  ...tseslint.config(
+    eslint.configs.recommended,
+    ...tseslint.configs.recommended
+  ),
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 0,
+    },
+  },
+  eslintPluginPrettierRecommended,
+]
