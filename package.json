@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev-watch": "bun --watch  main.ts",
-    "dev-hot": "bun --hot  main.ts "
+    "dev-hot": "bun --hot  main.ts ",
+    "build": "bun build main.ts --outfile main --compile --minify"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

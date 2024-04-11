@@ -17,11 +17,11 @@ export function Controller(prefix: string) {
       constructor() {
         super()
         const mateRoutes = getMetadata(this.constructor, ROUTE_METADATA_KEY)
-        const routes = {}
+        const routes: IRoutes = {}
         Object.keys(mateRoutes).forEach((key) => {
           //类似 /user//替换为 /user
           key = key.replace(/\/+$/, '')
-          this.routes[`${prefix ? '/' + prefix : ''}${key ? '/' + key : ''}`] =
+          routes[`${prefix ? '/' + prefix : ''}${key ? '/' + key : ''}`] =
             mateRoutes[key]
         })
 

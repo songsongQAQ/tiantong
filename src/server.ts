@@ -28,6 +28,7 @@ export class Server {
     try {
       const url = new URL(req.url)
       const pathname = url.pathname.replace(/\/+$/, '')
+      console.log('pathname----------', pathname)
       const reqMethod = req.method?.toLowerCase()
       // 检查请求路径是否与路由信息匹配
       const { handler, method, target } = this.routes?.[pathname] || {}
@@ -49,7 +50,7 @@ export class Server {
           body = await req.json()
         }
 
-        for (let params of metadataParams) {
+        for (const params of metadataParams) {
           const { type, name, parameterIndex } = params
           switch (type) {
             case 'query':
@@ -60,7 +61,6 @@ export class Server {
               break
           }
         }
-
         // 调用处理函数，传入提取的参数值
         // @ts-ignore
         const data = await handler.apply(handlerInstance, args)
