@@ -1,11 +1,21 @@
-import { Controller, Get } from '~/lib/index.ts'
+import { Controller, Get, Post } from '~/lib/index.ts'
 
 @Controller('user')
 export class UserController {
-  constructor() {}
+  test: string
+  constructor() {
+    this.test = 'test1111'
+  }
 
-  @Get('/')
+  @Get('')
   getUser() {
-    return 'user'
+    return 'test'
+  }
+  @Post('add')
+  addUser() {
+    return {
+      test: this.test,
+      str: 'add user',
+    }
   }
 }
