@@ -1,4 +1,8 @@
 import { Injectable } from '~/lib'
 
 @Injectable()
-export class UserService {}
+export class UserService {
+  getUser() {
+    return 'test'
+  }
+}

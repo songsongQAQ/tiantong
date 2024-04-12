@@ -1,26 +1,32 @@
 ## Quick Start
 
-> 如果你想体验轻量级的nest
+> 基于bun的类springboot框架
 
 
 ### In Node.js
 
 ```bash
 npm install tiantong --save
-```
-## Server
-```js
-import { Server } from 'tiantong'
-import { UserController } from './modules/user/user.controller.ts'
 
-const user = new UserController()
-Bun.serve({
-  port: 3000,
-  async fetch(req): Promise<any> {
-    return new Server([user]).handleRequest(req)
-  },
-})
+import { Factory } from 'tiantong'
+import { AppModule } from './app.module'
+Factory.create({ module: AppModule })
+Factory.listen(3000)
 ```
+## Module
+```js
+import { UserController } from '@/modules/user/user.controller.ts'
+import { UserService } from '@/modules/user/user.service.ts'
+import { Module }  from 'tiantong'
+
+@Module({
+  controllers: [UserController],
+  providers: [UserService],
+})
+export class TestModule {}
+
+```
+
 ## Controller
 ```js
 import { Body, Controller, Get, Post, Query } from 'tiantong'
@@ -56,5 +62,19 @@ export class TestController {
     }
   }
 }
+
+```
+## Server
+
+```js
+import { Injectable } from 'tiantong'
+
+@Injectable()
+export class UserService {
+  getUser() {
+    return 'test'
+  }
+}
+
 
 ```
