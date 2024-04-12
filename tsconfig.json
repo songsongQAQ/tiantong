@@ -25,8 +25,13 @@
     "noPropertyAccessFromIndexSignature": false,
     "experimentalDecorators": true, // 开启实验性 TypeScript 装饰器
     "emitDecoratorMetadata": true,  // 在编译阶段为类或类属性添加了元数据
+    "types":["reflect-metadata", "node","@types/bun"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
+    }
   },
   "include":[
-    "*.ts"
+    "**/*.ts"
   ]
 }
