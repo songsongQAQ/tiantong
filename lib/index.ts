@@ -4,4 +4,6 @@ import Factory from './Factory'
 import { Get, Post } from './Http.ts'
 import Injectable from './Injectable'
 import Module from './Module.ts'
-export { Controller, Factory, Get, Injectable, Module, Post }
+import { Body, Param } from './RoutrParams.ts'
+
+export { Body, Controller, Factory, Get, Injectable, Module, Param, Post }

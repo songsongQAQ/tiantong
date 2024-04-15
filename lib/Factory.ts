@@ -1,4 +1,10 @@
-import { BASE_PATH, METHOD, PATH } from '~/lib/common/const.ts'
+import {
+  BASE_PATH,
+  INJECTABLE_WATERMARK,
+  METHOD,
+  PARAMS,
+  PATH,
+} from '~/lib/common/const.ts'
 
 export interface IOptions {
   module: any
@@ -6,13 +12,21 @@ export interface IOptions {
 export interface IRouter {
   path: string
   method: 'get' | 'post'
-  fn: () => Promise<any>
+  fn: (...args: any) => Promise<any>
+  methodName: string
+  controller: any
+}
+export interface IParamsTypes {
+  index: number
+  property: string
+  type: 'body' | 'query' | 'param'
 }
 class Factory {
-  routes: IRouter[]
-
+  private routes: IRouter[]
+  private types: Record<string, any>
   constructor() {
     this.routes = []
+    this.types = {}
   }
 
   create(options: IOptions) {
@@ -49,10 +63,26 @@ class Factory {
 
   initRoute(Controllers: any[]) {
     Controllers.forEach((Controller: any) => {
+      // 获取当前控制器的参数
+      const paramtypes = Reflect.getMetadata('design:paramtypes', Controller)
+
+      //TODO 暂时不考虑provider需要注入的情况
+
+      const args = paramtypes.map((Type: any) => {
+        // 若未被Injectable装饰则报错
+        if (!Reflect.getMetadata(INJECTABLE_WATERMARK, Type)) {
+          throw new Error(`${Type.name} is not injectable!`)
+        }
+        // 返回缓存的type或新建type（只初始化一个Type实例）
+        return this.types[Type.name]
+          ? this.types[Type.name]
+          : (this.types[Type.name] = new Type())
+      })
+
       // 获取当前控制器的基础路径
       const basePath = Reflect.getMetadata(BASE_PATH, Controller)
       // 获取当前控制器的方法
-      const controller = new Controller()
+      const controller = new Controller(...args)
       const proto: any = Reflect.getPrototypeOf(controller)
       const methodsNames = Object.getOwnPropertyNames(proto).filter(
         (item: string) =>
@@ -72,7 +102,10 @@ class Factory {
         const route = {
           path: path,
           method: method.toLowerCase(),
+          //已经上this的指向永远执行这个实例
           fn: fn.bind(controller),
+          methodName: methodName,
+          controller,
         }
         this.registerRoute(route)
       })
@@ -82,6 +115,31 @@ class Factory {
   registerRoute(route: IRouter) {
     this.routes.push(route)
   }
+  async getParams(req: Request, paramsTypes: IParamsTypes[]): Promise<any[]> {
+    //body参数 流只能使用一次
+    let bodyData = null
+    if (req.method?.toLowerCase() === 'post') {
+      bodyData = await req.json()
+    }
+    const url = new URL(req.url)
+    const params = []
+    for (const paramsType of paramsTypes) {
+      const { type, property, index } = paramsType
+
+      switch (type) {
+        case 'body':
+          params[index] = property ? bodyData?.[property] : bodyData
+          break
+        case 'query':
+          break
+        case 'param':
+          params[index] = property
+            ? url.searchParams.get(property)
+            : Object.fromEntries(url.searchParams)
+      }
+    }
+    return params
+  }
 
   async handleRoute(req: Request) {
     const url = new URL(req.url)
@@ -90,10 +148,20 @@ class Factory {
     const router = this.routes.find(
       (item) => item.path === path && item.method === reqMethod
     )
+
     if (!router) {
       return new Response('404')
     } else {
-      const data = await router.fn()
+      const paramsTypes = Reflect.getMetadata(
+        PARAMS,
+        router.controller,
+        router.methodName
+      )
+      //重构参数
+      const params: any[] = await this.getParams(req, paramsTypes)
+
+      const data = await router.fn(...params)
+
       return Response.json({
         code: 0,
         data,

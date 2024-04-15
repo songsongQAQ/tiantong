@@ -1,21 +1,28 @@
-import { Controller, Get, Post } from '~/lib/index.ts'
+import { UserService } from '@/modules/user/user.service.ts'
+import { Body, Controller, Get, Param, Post } from '~/lib/index.ts'
 
 @Controller('user')
 export class UserController {
   test: string
-  constructor() {
+  constructor(private userService: UserService) {
     this.test = 'test1111'
   }
 
   @Get('')
-  getUser() {
-    return 'test'
+  getUser(@Param('id') id: number) {
+    return {
+      id,
+    }
   }
   @Post('add')
-  addUser() {
+  addUser(@Body() body: any, @Body('id') id: number) {
+    console.log('id----------', id)
     return {
-      test: this.test,
+      id,
+      body,
+      this: this,
       str: 'add user',
+      userService: this.userService?.getUser(),
     }
   }
 }
