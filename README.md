@@ -29,36 +29,30 @@ export class TestModule {}
 
 ## Controller
 ```js
-import { Body, Controller, Get, Post, Query } from 'tiantong'
+import { UserService } from '@/modules/user/user.service.ts'
+import { Body, Controller, Get, Param, Post } from '~/lib/index.ts'
 
-@Controller('test')
-export class TestController {
+@Controller('user')
+export class UserController {
   test: string
-  constructor() {
-    this.test = 'xxx'
+  constructor(private userService: UserService) {
+    this.test = 'test1111'
   }
-  @Get()
-  getUser(
-    @Query('id') id: string,
-    @Query('name') name: string,
-    @Query() query: any
-  ) {
+
+  @Get('')
+  getUser(@Param('id') id: number) {
     return {
       id,
-      name,
-      query,
     }
   }
-
-  @Post('edit')
-  addUser(
-    @Body('id') id: number,
-    @Body('name') name: string,
-    @Body() body: any
-  ) {
+  @Post('add')
+  addUser(@Body() body: any, @Body('id') id: number) {
     return {
       id,
       body,
+      this: this,
+      str: 'add user',
+      userService: this.userService.getUser(),
     }
   }
 }
