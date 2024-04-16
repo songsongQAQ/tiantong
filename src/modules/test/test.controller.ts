@@ -4,7 +4,7 @@ import { Controller, Get } from '~/lib/index.ts'
 export class TestController {
   constructor() {}
 
-  @Get('test')
+  @Get()
   getUser() {
     return 'test'
   }

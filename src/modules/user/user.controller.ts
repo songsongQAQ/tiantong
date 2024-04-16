@@ -1,5 +1,6 @@
 import { UserService } from '@/modules/user/user.service.ts'
-import { Body, Controller, Get, Param, Post } from '~/lib/index.ts'
+
+import { Body, Controller, Get, Param, Post, Query } from '~/lib/index.ts'
 
 @Controller('user')
 export class UserController {
@@ -8,12 +9,20 @@ export class UserController {
     this.test = 'test1111'
   }
 
-  @Get('')
-  getUser(@Param('id') id: number) {
+  @Get()
+  getUser(@Query('id') id: number) {
     return {
       id,
     }
   }
+  @Get(':id/:name')
+  getUserById(@Param('id') id: string, @Param('name') name: string) {
+    return {
+      id,
+      name,
+    }
+  }
+
   @Post('add')
   addUser(@Body() body: any, @Body('id') id: number) {
     console.log('id----------', id)

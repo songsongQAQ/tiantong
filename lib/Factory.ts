@@ -98,11 +98,12 @@ class Factory {
           return
         }
         path = `${basePath ? `/${basePath}` : ''}${path ? `/${path}` : ''}`
+
         // 构造并注册路由
         const route = {
           path: path,
           method: method.toLowerCase(),
-          //已经上this的指向永远执行这个实例
+          //this的指向永远执行这个实例
           fn: fn.bind(controller),
           methodName: methodName,
           controller,
@@ -122,20 +123,24 @@ class Factory {
       bodyData = await req.json()
     }
     const url = new URL(req.url)
+
     const params = []
     for (const paramsType of paramsTypes) {
       const { type, property, index } = paramsType
+      // /user/1/garson 分割成 [ "", "user", "1", "garson" ]
+      const pathnameParams = url.pathname.split('/')
 
       switch (type) {
         case 'body':
           params[index] = property ? bodyData?.[property] : bodyData
           break
         case 'query':
-          break
-        case 'param':
           params[index] = property
             ? url.searchParams.get(property)
             : Object.fromEntries(url.searchParams)
+          break
+        case 'param':
+          params[index] = pathnameParams.slice(-paramsTypes.length)[index]
       }
     }
     return params
@@ -145,18 +150,22 @@ class Factory {
     const url = new URL(req.url)
     const path = url.pathname.replace(/\/+$/, '')
     const reqMethod = req.method?.toLowerCase()
-    const router = this.routes.find(
-      (item) => item.path === path && item.method === reqMethod
-    )
-
+    const router = this.routes.find((item) => {
+      if (item.method !== reqMethod) return false
+      if (item.path === path) {
+        return true
+      } else if (item.path.split(':').length > 1) {
+        const regexPattern = item.path.replace(/:\w+/g, '\\w+')
+        const regex = new RegExp(`^${regexPattern}$`)
+        //用来匹配 /user/1/garson == /user/:id/:name
+        return regex.test(path)
+      }
+    })
     if (!router) {
       return new Response('404')
     } else {
-      const paramsTypes = Reflect.getMetadata(
-        PARAMS,
-        router.controller,
-        router.methodName
-      )
+      const paramsTypes =
+        Reflect.getMetadata(PARAMS, router.controller, router.methodName) || []
       //重构参数
       const params: any[] = await this.getParams(req, paramsTypes)
 

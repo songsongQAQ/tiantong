@@ -7,14 +7,15 @@
 
 ```bash
 npm install tiantong --save
-
+```
+```ts
 import { Factory } from 'tiantong'
 import { AppModule } from './app.module'
 Factory.create({ module: AppModule })
 Factory.listen(3000)
 ```
 ## Module
-```js
+```ts
 import { UserController } from '@/modules/user/user.controller.ts'
 import { UserService } from '@/modules/user/user.service.ts'
 import { Module }  from 'tiantong'
@@ -28,9 +29,9 @@ export class TestModule {}
 ```
 
 ## Controller
-```js
+```ts
 import { UserService } from '@/modules/user/user.service.ts'
-import { Body, Controller, Get, Param, Post } from '~/lib/index.ts'
+import { Body, Controller, Get, Param, Post } from 'tiantong'
 
 @Controller('user')
 export class UserController {
@@ -60,7 +61,7 @@ export class UserController {
 ```
 ## Server
 
-```js
+```ts
 import { Injectable } from 'tiantong'
 
 @Injectable()
