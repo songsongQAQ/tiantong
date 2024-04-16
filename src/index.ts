@@ -1,10 +1,10 @@
 import 'reflect-metadata'
 import Controller from './Controller'
 import Factory from './Factory'
-import { Get, Post } from './Http.ts'
+import { Get, Post } from './Http'
 import Injectable from './Injectable'
-import Module from './Module.ts'
-import { Body, Param, Query } from './RoutrParams.ts'
+import Module from './Module'
+import { Body, Param, Query } from './RoutrParams'
 
 export {
   Body,
