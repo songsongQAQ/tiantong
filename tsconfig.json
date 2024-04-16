@@ -29,9 +29,10 @@
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./*"]
-    }
+    },
+    "outDir": "./lib",
+    "declaration": true
   },
-  "include":[
-    "**/*.ts"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

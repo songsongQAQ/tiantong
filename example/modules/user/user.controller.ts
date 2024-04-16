@@ -1,6 +1,6 @@
 import { UserService } from '@/modules/user/user.service.ts'
 
-import { Body, Controller, Get, Param, Post, Query } from '~/lib/index.ts'
+import { Body, Controller, Get, Param, Post, Query } from '~/src/index.ts'
 
 @Controller('user')
 export class UserController {

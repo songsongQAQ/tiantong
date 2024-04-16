@@ -1,4 +1,4 @@
-import { Factory } from '~/lib'
+import { Factory } from '../src'
 import { AppModule } from './app.module'
 
 Factory.create({ module: AppModule })

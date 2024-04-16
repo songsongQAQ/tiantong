@@ -1,4 +1,4 @@
-import { PARAMS } from '~/lib/common/const.ts'
+import { PARAMS } from '@/common/const.ts'
 
 export const Body = (property?: string) => {
   return (target: any, propertyKey: string, parameterIndex: number) => {

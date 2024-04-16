@@ -1,36 +1,75 @@
-# bun-nest
+## Quick Start
 
-#### Description
-使用bun实现nest
-
-#### Software Architecture
-Software architecture description
-
-#### Installation
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### Instructions
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### Contribution
-
-1.  Fork the repository
-2.  Create Feat_xxx branch
-3.  Commit your code
-4.  Create Pull Request
+> 基于bun的类springboot框架
 
 
-#### Gitee Feature
+### In Node.js
 
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
-2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+```bash
+npm install tiantong --save
+```
+```ts
+import { Factory } from 'tiantong'
+import { AppModule } from './app.module'
+Factory.create({ module: AppModule })
+Factory.listen(3000)
+```
+## Module
+```ts
+import { UserController } from '@/modules/user/user.controller.ts'
+import { UserService } from '@/modules/user/user.service.ts'
+import { Module }  from 'tiantong'
+
+@Module({
+  controllers: [UserController],
+  providers: [UserService],
+})
+export class TestModule {}
+
+```
+
+## Controller
+```ts
+import { UserService } from '@/modules/user/user.service.ts'
+import { Body, Controller, Get, Param, Post } from 'tiantong'
+
+@Controller('user')
+export class UserController {
+  test: string
+  constructor(private userService: UserService) {
+    this.test = 'test1111'
+  }
+
+  @Get('')
+  getUser(@Param('id') id: number) {
+    return {
+      id,
+    }
+  }
+  @Post('add')
+  addUser(@Body() body: any, @Body('id') id: number) {
+    return {
+      id,
+      body,
+      this: this,
+      str: 'add user',
+      userService: this.userService.getUser(),
+    }
+  }
+}
+
+```
+## Server
+
+```ts
+import { Injectable } from 'tiantong'
+
+@Injectable()
+export class UserService {
+  getUser() {
+    return 'test'
+  }
+}
+
+
+```
