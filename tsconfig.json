@@ -30,9 +30,6 @@
       "@/*": ["./src/*"],
       "~/*": ["./*"]
     },
-    "outDir": "./lib",
-    "declaration": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": ["./src"]
 }

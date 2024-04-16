@@ -1,6 +1,7 @@
 ## Quick Start
 
-> 基于bun的类springboot框架
+> 基于[Bun](https://bun.sh/)的类springboot框架
+
 
 
 ### In Node.js

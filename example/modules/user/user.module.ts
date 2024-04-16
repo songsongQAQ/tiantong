@@ -1,9 +1,9 @@
-import { TestController } from '@/modules/test/test.controller.ts'
-import { TestService } from '@/modules/test/test.service.ts'
 import { Module } from '../../../src'
+import { UserController } from './user.controller'
+import { UserService } from './user.service'
 
 @Module({
-  controllers: [TestController],
-  providers: [TestService],
+  controllers: [UserController],
+  providers: [UserService],
 })
 export class UserModule {}

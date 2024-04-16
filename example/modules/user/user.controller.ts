@@ -1,6 +1,5 @@
-import { UserService } from '@/modules/user/user.service.ts'
-
-import { Body, Controller, Get, Param, Post, Query } from '~/src/index.ts'
+import { Body, Controller, Get, Param, Post, Query } from '../../../src'
+import { UserService } from './user.service'
 
 @Controller('user')
 export class UserController {
@@ -24,7 +23,7 @@ export class UserController {
   }
 
   @Post('add')
-  addUser(@Body() body: any, @Body('id') id: number) {
+  addUser(@Body() body: any, @Body('id') id: number): any {
     console.log('id----------', id)
     return {
       id,

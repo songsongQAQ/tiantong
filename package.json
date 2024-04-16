@@ -42,7 +42,7 @@
   "main": "./lib/index.js",
   "module": "./lib/index.js",
   "files": [
-    "lib",
+    "src",
     "index.d.ts"
   ],
   "keywords": [
