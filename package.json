@@ -1,11 +1,11 @@
 {
-  "name": "tiantong",
+  "name": "tiantong-test",
   "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev-watch": "bun --watch  example/main.ts",
     "dev-hot": "bun --hot  example/main.ts ",
-    "build": "tsc ./src/index.ts"
+    "build": "tsc --declaration  --outDir ./lib ./src/index.ts"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -42,8 +42,7 @@
   "main": "./lib/index.js",
   "module": "./lib/index.js",
   "files": [
-    "src",
-    "index.d.ts"
+    "lib"
   ],
   "keywords": [
     "node",
