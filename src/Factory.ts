@@ -64,10 +64,10 @@ class Factory {
   initControllersByImports(imports: any[]): any[] {
     let Controllers: any[] = []
     imports.forEach((Controller: any) => {
-      const mateControllers = Reflect.getMetadata('controllers', Controller)
+      const mataControllers = Reflect.getMetadata('controllers', Controller)
       // 递归模块下的controller
-      if (mateControllers?.length) {
-        Controllers = [...Controllers, ...mateControllers]
+      if (mataControllers?.length) {
+        Controllers = [...Controllers, ...mataControllers]
       }
       // 递归模块下的imports
       Controllers = [

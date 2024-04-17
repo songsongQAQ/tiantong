@@ -19,6 +19,7 @@
 ### In Node.js
 
 ```bash
+npm install -g bun
 npm install tiantong --save
 ```
 
@@ -38,7 +39,7 @@ import { Module }  from 'tiantong'
   controllers: [UserController],
   providers: [UserService],
 })
-export class TestModule {}
+export class UserModule {}
 
 ```
 
