@@ -37,7 +37,7 @@
     "prettier-plugin-organize-imports": "^3.2.4",
     "reflect-metadata": "^0.2.2"
   },
-  "types": "index.d.ts",
+  "types": "./lib/index.d.ts",
   "description": "基于bun的类springboot框架",
   "main": "./lib/index.js",
   "module": "./lib/index.js",
