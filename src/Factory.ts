@@ -4,7 +4,7 @@ import {
   METHOD,
   PARAMS,
   PATH,
-} from '@/common/const'
+} from './common/const'
 
 export interface IOptions {
   module: any

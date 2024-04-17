@@ -1,6 +1,6 @@
 {
   "name": "tiantong-test",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "type": "module",
   "scripts": {
     "dev-watch": "bun --watch  example/main.ts",

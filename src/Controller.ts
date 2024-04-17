@@ -1,4 +1,4 @@
-import { BASE_PATH } from './common/const.ts'
+import { BASE_PATH } from './common/const'
 function Controller(path: string) {
   // 返回类装饰器
   return function (target: any) {
