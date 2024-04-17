@@ -73,7 +73,7 @@ export class UserController {
   }
   
   @get('delete/:id')
-  addUser(@Parsm('id') id: string) {
+  addUser(@Param('id') id: string) {
     return {
       id,
     }
