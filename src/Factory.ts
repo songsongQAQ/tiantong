@@ -201,7 +201,9 @@ class Factory {
       }
     })
     if (!router) {
-      return new Response('404')
+      return new Response('not found', {
+        status: 404,
+      })
     } else {
       const paramsTypes =
         Reflect.getMetadata(PARAMS, router.controller, router.methodName) || []
@@ -225,7 +227,13 @@ class Factory {
     Bun.serve({
       port: port,
       fetch: async (req: Request): Promise<Response> => {
-        return await this.handleRoute(req)
+        try {
+          return await this.handleRoute(req)
+        } catch (err) {
+          return new Response(JSON.stringify(err), {
+            status: 500,
+          })
+        }
       },
     })
   }
