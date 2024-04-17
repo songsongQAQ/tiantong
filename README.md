@@ -2,13 +2,26 @@
 
 > 基于[Bun](https://bun.sh/)的类springboot框架
 
-
+### 已实现功能
+- [x] Module
+- [x] Controller
+- [x] Service
+- [x] Injectable
+- [x] Provider
+### 已实现功能路由修饰器
+- [x] @Post
+- [x] @Get
+### 已实现功能参数修饰器
+- [x] @Query
+- [x] @Param
+- [x] @Body
 
 ### In Node.js
 
 ```bash
 npm install tiantong --save
 ```
+
 ```ts
 import { Factory } from 'tiantong'
 import { AppModule } from './app.module'
@@ -47,6 +60,7 @@ export class UserController {
       id,
     }
   }
+  
   @Post('add')
   addUser(@Body() body: any, @Body('id') id: number) {
     return {
@@ -55,6 +69,13 @@ export class UserController {
       this: this,
       str: 'add user',
       userService: this.userService.getUser(),
+    }
+  }
+  
+  @get('delete/:id')
+  addUser(@Parsm('id') id: string) {
+    return {
+      id,
     }
   }
 }
