@@ -1,4 +1,5 @@
-import { Injectable } from 'tiantong-test'
+import { Injectable } from '../../../src'
+//import { Injectable } from 'tiantong-test'
 
 @Injectable()
 export class UserService {

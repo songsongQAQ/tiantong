@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, Query } from 'tiantong-test'
+import { Body, Controller, Get, Param, Post, Query } from '../../../src'
+//import { Body, Controller, Get, Param, Post, Query } from 'tiantong-test'
 import { UserService } from './user.service'
 
 @Controller('user')

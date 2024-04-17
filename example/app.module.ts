@@ -1,4 +1,5 @@
-import { Module } from 'tiantong-test'
+//import { Module } from 'tiantong-test'
+import { Module } from '../src'
 import { UserModule } from './modules/user/user.module'
 
 @Module({

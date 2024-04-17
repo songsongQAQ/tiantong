@@ -6,9 +6,16 @@ import {
   PATH,
 } from './common/const'
 
+/**
+ * 表示可注入的选项接口。
+ */
 export interface IOptions {
   module: any
 }
+
+/**
+ * 表示路由器接口。
+ */
 export interface IRouter {
   path: string
   method: 'get' | 'post'
@@ -16,20 +23,33 @@ export interface IRouter {
   methodName: string
   controller: any
 }
+
+/**
+ * 表示路由参数类型接口。
+ */
 export interface IParamsTypes {
   index: number
   property: string
   type: 'body' | 'query' | 'param'
 }
+
+/**
+ * 表示工厂类。
+ */
 class Factory {
   private routes: IRouter[]
   private types: Record<string, any>
+
   constructor() {
     this.routes = []
     this.types = {}
   }
 
-  create(options: IOptions) {
+  /**
+   * 创建路由。
+   * @param options - 选项参数。
+   */
+  create(options: IOptions): void {
     const { module } = options
     const imports = Reflect.getMetadata('imports', module) || []
     const Controllers = this.initControllersByImports(imports)
@@ -37,10 +57,9 @@ class Factory {
   }
 
   /**
-   * 递归获取模块下的controller
-   *
-   * @param {any[]} imports - 一个导入项数组
-   * @return {  any[]} 初始化后的控制器
+   * 递归初始化控制器。
+   * @param imports - 导入项数组。
+   * @returns 初始化后的控制器数组。
    */
   initControllersByImports(imports: any[]): any[] {
     let Controllers: any[] = []
@@ -61,7 +80,11 @@ class Factory {
     return Controllers
   }
 
-  initRoute(Controllers: any[]) {
+  /**
+   * 初始化路由。
+   * @param Controllers - 控制器数组。
+   */
+  initRoute(Controllers: any[]): void {
     Controllers.forEach((Controller: any) => {
       // 获取当前控制器的参数
       const paramtypes = Reflect.getMetadata('design:paramtypes', Controller)
@@ -113,9 +136,20 @@ class Factory {
     })
   }
 
-  registerRoute(route: IRouter) {
+  /**
+   * 注册路由。
+   * @param route - 路由信息。
+   */
+  registerRoute(route: IRouter): void {
     this.routes.push(route)
   }
+
+  /**
+   * 获取参数。
+   * @param req - 请求对象。
+   * @param paramsTypes - 参数类型数组。
+   * @returns 参数数组。
+   */
   async getParams(req: Request, paramsTypes: IParamsTypes[]): Promise<any[]> {
     //body参数 流只能使用一次
     let bodyData = null
@@ -146,7 +180,12 @@ class Factory {
     return params
   }
 
-  async handleRoute(req: Request) {
+  /**
+   * 处理路由。
+   * @param req - 请求对象。
+   * @returns 响应对象。
+   */
+  async handleRoute(req: Request): Promise<Response> {
     const url = new URL(req.url)
     const path = url.pathname.replace(/\/+$/, '')
     const reqMethod = req.method?.toLowerCase()
@@ -178,13 +217,15 @@ class Factory {
     }
   }
 
-  listen(port: number) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const _this = this
+  /**
+   * 监听端口。
+   * @param port - 端口号。
+   */
+  listen(port: number): void {
     Bun.serve({
       port: port,
-      async fetch(req: Request): Promise<any> {
-        return await _this.handleRoute(req)
+      fetch: async (req: Request): Promise<Response> => {
+        return await this.handleRoute(req)
       },
     })
   }
