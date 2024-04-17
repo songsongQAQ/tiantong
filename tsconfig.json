@@ -1,35 +1,36 @@
 {
   "compilerOptions": {
     // Enable latest features
-    "lib": ["ESNext", "DOM"],
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleDetection": "force",
-    "jsx": "react-jsx",
-    "allowJs": true,
+    "lib": ["ESNext", "DOM"], // 使用最新的 ECMAScript 和 DOM 标准库
+    "target": "ESNext", // 编译目标为 ECMAScript 的最新版本
+    "module": "ESNext", // 使用 ECMAScript 模块规范
+    "moduleDetection": "force", // 强制启用模块检测
+    "jsx": "react-jsx", // 使用 React JSX 语法
+    "allowJs": true, // 允许编译 JavaScript 文件
 
     // Bundler mode
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "noEmit": true,
+    "moduleResolution": "bundler", // 使用捆绑器模块解析策略
+    "allowImportingTsExtensions": true, // 允许导入 TypeScript 扩展名的模块
+    "verbatimModuleSyntax": true, // 使用原始模块语法
+    "noEmit": true, // 不生成编译结果
 
     // Best practices
-    "strict": true,
-    "skipLibCheck": true,
-    "noFallthroughCasesInSwitch": true,
+    "strict": true, // 启用所有严格类型检查选项
+    "skipLibCheck": true, // 跳过对所有声明文件的类型检查
+    "noFallthroughCasesInSwitch": true, // 禁止在 switch 语句中从一个情况掉落到另一个情况
 
     // Some stricter flags (disabled by default)
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false,
+    "noUnusedLocals": false, // 不检查未使用的局部变量
+    "noUnusedParameters": false, // 不检查未使用的参数
+    "noPropertyAccessFromIndexSignature": false, // 允许通过索引签名访问属性
     "experimentalDecorators": true, // 开启实验性 TypeScript 装饰器
-    "emitDecoratorMetadata": true,  // 在编译阶段为类或类属性添加了元数据
-    "types":["reflect-metadata", "node","@types/bun"],
+    "emitDecoratorMetadata": true, // 在编译阶段为类或类属性添加了元数据
+    "types": ["reflect-metadata", "node", "@types/bun"], // 引入类型定义文件
+
     "paths": {
-      "@/*": ["./src/*"],
-      "~/*": ["./*"]
-    },
+      "@/*": ["./src/*"], // 定义路径别名，使得 @/* 指向 ./src/*
+      "~/*": ["./*"] // 定义路径别名，使得 ~/* 指向 ./*
+    }
   },
-  "include": ["./src"]
+  "include": ["./src"] // 指定需要编译的文件目录
 }
