@@ -200,6 +200,7 @@ class Factory {
         return regex.test(path)
       }
     })
+    console.log('request url ----------', path)
     if (!router) {
       return new Response('not found', {
         status: 404,
@@ -224,6 +225,7 @@ class Factory {
    * @param port - 端口号。
    */
   listen(port: number): void {
+    console.log('listen', port)
     Bun.serve({
       port: port,
       fetch: async (req: Request): Promise<Response> => {
