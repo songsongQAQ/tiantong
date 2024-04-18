@@ -1,12 +1,14 @@
 {
-  "name": "tiantong-test",
-  "version": "0.0.7",
+  "name": "tiantong",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev-watch": "bun --watch  example/main.ts",
     "dev-hot": "bun --hot  example/main.ts ",
     "build": "tsc --declaration  --outDir ./lib ./src/index.ts",
-    "build-bun": "bun build ./src/index.ts --outfile tiantong --compile"
+    "build-bun": "bun build ./src/index.ts --outdir ./test",
+    "build-main": "bun  build.ts",
+    "build2": "bun build --compile --minify --sourcemap ./example/main.ts --outfile myapp"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
