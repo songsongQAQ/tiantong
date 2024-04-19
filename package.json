@@ -5,6 +5,7 @@
   "scripts": {
     "dev-watch": "bun --watch  example/main.ts",
     "dev-hot": "bun --hot  example/main.ts ",
+    "start-server": "/home/ubuntu/.bun/bin/bun --hot example/main.ts",
     "build": "tsc --declaration  --outDir ./lib ./src/index.ts",
     "build-bun": "bun build ./src/index.ts --outdir ./test",
     "build-main": "bun  build.ts",
