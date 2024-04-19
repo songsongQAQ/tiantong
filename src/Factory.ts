@@ -91,17 +91,7 @@ class Factory {
 
       //TODO 暂时不考虑provider需要注入的情况
 
-      const args = paramtypes.map((Type: any) => {
-        // 若未被Injectable装饰则报错
-        if (!Reflect.getMetadata(INJECTABLE_WATERMARK, Type)) {
-          throw new Error(`${Type.name} is not injectable!`)
-        }
-        // 返回缓存的type或新建type（只初始化一个Type实例）
-        return this.types[Type.name]
-          ? this.types[Type.name]
-          : (this.types[Type.name] = new Type())
-      })
-
+      const args = this.generateArgs(Controller)
       // 获取当前控制器的基础路径
       const basePath = Reflect.getMetadata(BASE_PATH, Controller)
       // 获取当前控制器的方法
@@ -135,7 +125,24 @@ class Factory {
       })
     })
   }
+  generateArgs(Controller: any) {
+    const paramtypes = Reflect.getMetadata('design:paramtypes', Controller)
 
+    //TODO 暂时不考虑provider需要注入的情况
+
+    return paramtypes.map((Type: any) => {
+      // 若未被Injectable装饰则报错
+      if (!Reflect.getMetadata(INJECTABLE_WATERMARK, Type)) {
+        throw new Error(`${Type.name} is not injectable!`)
+      }
+      // 返回缓存的type或新建type（只初始化一个Type实例）
+      if (!this.types[Type.name]) {
+        const args = this.generateArgs(Type) || []
+        this.types[Type.name] = new Type(...args)
+      }
+      return this.types[Type.name]
+    })
+  }
   /**
    * 注册路由。
    * @param route - 路由信息。
@@ -212,7 +219,6 @@ class Factory {
       const params: any[] = await this.getParams(req, paramsTypes)
 
       const data = await router.fn(...params)
-
       return Response.json({
         code: 0,
         data,

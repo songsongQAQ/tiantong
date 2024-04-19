@@ -5,6 +5,7 @@ import { Get, Post } from './Http'
 import Injectable from './Injectable'
 import Module from './Module'
 import { Body, Param, Query } from './RouterParams'
+import { PrismaService } from './utils/PrismaService.ts'
 
 export {
   Body,
@@ -15,5 +16,6 @@ export {
   Module,
   Param,
   Post,
+  PrismaService,
   Query,
 }

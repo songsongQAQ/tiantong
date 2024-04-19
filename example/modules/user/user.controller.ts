@@ -15,24 +15,18 @@ export class UserController {
       id,
     }
   }
-  @Get(':id/:name')
-  getUserById(@Param('id') id: string, @Param('name') name: string) {
-    return {
-      test: '测试webhooks1111',
-      id,
-      name,
-    }
+
+  @Get(':id')
+  async getUserById(@Param('id') id: string) {
+    const data = await this.userService.getUserById(Number(id))
+    console.log('data----------', data)
+    return data
   }
 
   @Post('add')
-  addUser(@Body() body: any, @Body('id') id: number): any {
-    console.log('id----------', id)
-    return {
-      id,
-      body,
-      this: this,
-      str: 'add user',
-      userService: this.userService?.getUser(),
-    }
+  async addUser(@Body() body: any): Promise<any> {
+    body.email = `${Math.random()}${body?.email}`
+    body.name = `${Math.random()}${body?.name}`
+    return this.userService.createUser(body)
   }
 }
