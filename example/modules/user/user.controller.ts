@@ -18,6 +18,7 @@ export class UserController {
   @Get(':id/:name')
   getUserById(@Param('id') id: string, @Param('name') name: string) {
     return {
+      test: '测试webhooks',
       id,
       name,
     }

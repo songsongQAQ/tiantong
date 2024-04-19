@@ -23,8 +23,8 @@ type IRouterParamsPropertyFn = (
  */
 export const RouterParams = (
   type: IRouterParamsType
-): ((property: string) => IRouterParamsPropertyFn) => {
-  return (property: string): IRouterParamsPropertyFn => {
+): ((property?: string) => IRouterParamsPropertyFn) => {
+  return (property?: string): IRouterParamsPropertyFn => {
     return (target: any, propertyKey: string, parameterIndex: number) => {
       // 获取或定义路由方法的参数元数据
       const paramsTypes = Reflect.getMetadata(PARAMS, target, propertyKey) || []
